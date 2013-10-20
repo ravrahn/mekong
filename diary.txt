@@ -1,2 +1,2 @@
 Date	Start	Stop	Activity
-20/10	16:00	00:00	Let's get it started
+20/10	16:00	23:00	Many things added. See commit messages.
