@@ -3,6 +3,8 @@ from cgi_helper import *
 from books_class import *
 import pages
 import json
+import os
+import re
 import cgi
 import cgitb
 cgitb.enable()
@@ -11,13 +13,23 @@ form = cgi.FieldStorage()
 
 print http_header()
 
-# print pages.login()
+# if "Login" in form.getlist("action"):
+# 	if os.path.exists(form.getlist("username")):
+# 		userFile = open(form.getlist("username"), "r")
+# 		password = userFile.readlines()[0]
+# 		re.sub(r"password=([A-Za-z0-9]+)", r"\1", password)
+# 		if form.getlist("password") == password:
+# 			# log them in
+# elif "Create Account" in form.getlist("action"):
+# 	if not os.path.exists(form.getlist("username")):
+# 		userFile = open(form.getlist("username"), "w")
+# 		userFile.write("password="+form.getlist("password")+"\n")
+# 		user
 
-# print pages.landing()
 
-import random
-string = pages.login() #title=random.choice(getBooks()).title
+if "login" in form.getlist("page"):
+	string = pages.login()
+else:
+	string = pages.mekong(form)
+
 print string
-
-# dictionry replace %s's inside the html file
-# print html % {"title":form}

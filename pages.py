@@ -2,12 +2,18 @@ def getHeader(searchTerms=""):
 	'''
 	in future, will check if user is logged in, etc.
 	'''
+	username = "Login or Register"
+	headerSrc = "header.html"
 
-	headerFile = open("header.html", "r")
+	# if user is logged in.
+	# then use the logged-in header
+	# comment in haiku
+
+	headerFile = open(headerSrc, "r")
 	header = headerFile.read()
 	headerFile.close()
 
-	return header
+	return header % {"username": username}
 
 def login():
 	loginFile = open("login.html", "r")
@@ -30,9 +36,9 @@ def index():
 
 	return index
 
-def mekong_page(title):
+def mekong(title):
 	mekongFile = open("mekong.html", "r")
 	mekong = mekongFile.read()
 	mekongFile.close()
 
-	return mekong % {"title":title}
+	return mekong % {"title":title, "header":getHeader()}

@@ -5,12 +5,12 @@
     <link rel="stylesheet" type="text/css" href="mekong.css">
 </head>
 <body>
-    %(header)s
-    <div id="login-body">
+%(header)s
+    <div class="content" id="login-content">
         <div class="login-container">
             <h2 id="login-heading">Login</h2>
             <form method="post" action="mekong.cgi" enctype="multipart/form-data">
-                <div><input placeholder="Username" type="text" name="login" class="login-textbox" /></div>
+                <div><input placeholder="Username" type="text" name="username" class="login-textbox" /></div>
                 <div><input placeholder="Password" type="password" name="password" class="login-textbox" /></div>
 
                 <div class="login-button"><input class="button" type="submit" name="action" value="Login"></div>
@@ -22,7 +22,7 @@
         <div class="new-account-container">
             <h2 id="register-heading">Register</h2>
             <form method="post" action="mekong.cgi" enctype="multipart/form-data">
-                <div><input placeholder="Username" type="text" name="login" class="login-textbox" /></div>
+                <div><input placeholder="Username" type="text" name="username" class="login-textbox" /></div>
                 <div><input placeholder="Password" type="password" name="password" class="login-textbox" /></div>
                 <div><input placeholder="Full Name" type="text" name="name" class="login-textbox" /></div>
                 <div><input placeholder="Street" type="text" name="street" class="login-textbox" /></div>
