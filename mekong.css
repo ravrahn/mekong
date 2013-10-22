@@ -1,33 +1,159 @@
 * {
-	font-family: "Helvetica Neue";
-	/*font-weight: lighter;*/
+	margin: 0px;
+	padding: 0px;
+	font-family: "Helvetica", "Helvetica", "Arial";
+	font-weight: lighter;
+}
+
+body {
+	background-color: #4390df;
+	color: #ffffff;
+}
+
+.login-textbox {
+	width: 16em;
+}
+
+input[type="text"] {
+	border-radius: 5px;
+	padding: 5px 10px;
+	margin: 6px;
+	font-size: 10pt;
+	color: #000000;
+	background-color: rgba(255,255,255,0.5);
+	border: none;
+}
+
+input[type="text"]:focus {
+	outline: 0;
+	background-color: rgba(255,255,255,0.75);
+}
+
+input[type="password"] {
+	border-radius: 5px;
+	padding: 5px 10px;
+	margin: 6px;
+	font-size: 10pt;
+	background-color: rgba(255,255,255,0.5);
+	border: none;
+}
+
+input[type="password"]:focus {
+	outline: 0;
+	background-color: rgba(255,255,255,0.75);
+}
+
+/* 'placeholder' for html5 textbox */
+::-webkit-input-placeholder { color: rgba(0,0,0,0.4); }
+::-moz-placeholder { color: rgba(0,0,0,0.4); } /* firefox 19+ */
+:-ms-input-placeholder { color: rgba(0,0,0,0.4); } /* ie */
+input:-moz-placeholder { color: rgba(0,0,0,0.4); }
+
+input[type="submit"] {
+	border: none;
+	border-radius: 3px;
+	font-size: 10pt;
+	padding: 5px 10px;
+	margin: 6px;
+	background-color: rgba(255,255,255,0.75);
+	color: #000000;
+}
+
+input[type="submit"]:focus {
+	outline: 0;
+	background-color: rgba(255,255,255, 0.8);
+}
+
+input[type="submit"]:active {
+	outline: 0;
+	background-color: #ffffff;
+}
+
+#title-column {
+	width: 150px;
+}
+
+#mekong-title {
+	margin-left: 32px;
+	font-size: 18pt;
+	text-decoration: none;
+	color: white;
+}
+
+#search-column {
+	width: auto;
+}
+
+#search-box {
+	width: 50%;
+	min-width: 20em;
+	font-size: 12pt;
+}
+
+#user-column {
+	width: 100px;
+}
+
+#navigation li:hover a {
+	color: white;
+}
+
+#navigation {
+	position: fixed;
+	left:0;
+	right:0;
+	z-index: 1;
+	background-color: rgba(255,255,255,0.3);
+	width: 100%;
+}
+
+h2 {
+	font-weight: lighter;
+}
+
+#register-heading {
+	text-align: center;
+}
+
+#login-heading {
+	text-align: center;
 }
 
 .vertical-line {
 	width: 1px;
-	background-color: #909090;
+	background-color: rgba(255,255,255,0.2);
+	border-radius: 3px;
 	height: 100%;
 	float: left;
-	margin-left: 16px;
-	margin-right: 16px;
+}
+
+.gap {
+	width: 16px;
+	height: 16px;
 }
 
 #login-body {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-top: -25;
-	margin-left: -25%;
-	width: 80%;
-	height: auto;
+	position: relative;
+	top: 80px;
+	bottom: 80px;
+	margin: auto;
+	float: center;
+	width: 550px;
+	height: 100%;
+	border: solid 1px;
+	border-color: rgba(255,255,255,0.2);
+	border-radius: 10px;
+	padding: 32px;
 }
 
 .login-container {
-	display: inline-block;
+	vertical-align: top;
 	float: left;
 }
 
 .new-account-container {
-	display: inline-block;
-	float: left;
+	border-left: solid 1px rgba(255,255,255,0.2);
+	padding-left: 5%;
+	vertical-align: top;
+	float: right;
 }

@@ -4,38 +4,37 @@
     <title>Login - Mekong</title>
     <link rel="stylesheet" type="text/css" href="mekong.css">
 </head>
-<body id="login-body">
-    <div class="login-container">
-        <form method="post" action="mekong.cgi" enctype="multipart/form-data">
-            <table align="left">
-                <caption><font color=red></font></caption>
-                <tr><td>Login:</td> <td><input type="text" name="login"  width="10" /></td></tr>
-                <tr><td>Password:</td> <td><input type="password" name="password"  width="10" /></td></tr>
+<body>
+    %(header)s
+    <div id="login-body">
+        <div class="login-container">
+            <h2 id="login-heading">Login</h2>
+            <form method="post" action="mekong.cgi" enctype="multipart/form-data">
+                <div><input placeholder="Username" type="text" name="login" class="login-textbox" /></div>
+                <div><input placeholder="Password" type="password" name="password" class="login-textbox" /></div>
 
-                <tr><td align="center" colspan="2"> <input class="btn" type="submit" name="action" value="Login"></td></tr>
-            </table>
-        </form>
-    </div>
+                <div class="login-button"><input class="button" type="submit" name="action" value="Login"></div>
+            </form>
+        </div>
 
-    <div class="vertical-line"></div>
+        <div class="vertical-line"></div>
 
-    <div class="new-account-container">
-        <form method="post" action="mekong.cgi" enctype="multipart/form-data">
-            <table align="right">
-                <caption><font color=red></font></caption>
-                <tr><td>Login:</td> <td><input type="text" name="login"  width="10" /></td></tr>
-                 <tr><td>Password:</td> <td><input type="password" name="password"  width="10" /></td></tr>
-                <tr><td>Full Name:</td> <td><input type="text" name="name"  width="50" /></td></tr>
-                <tr><td>Street:</td> <td><input type="text" name="street"  width="50" /></td></tr>
-                <tr><td>City/Suburb:</td> <td><input type="text" name="city"  width="25" /></td></tr>
-                <tr><td>State:</td> <td><input type="text" name="state"  width="25" /></td></tr>
-                <tr><td>Postcode:</td> <td><input type="text" name="postcode"  width="25" /></td></tr>
-                <tr><td>Email Address:</td> <td><input type="text" name="email"  width="35" /></td></tr>
+        <div class="new-account-container">
+            <h2 id="register-heading">Register</h2>
+            <form method="post" action="mekong.cgi" enctype="multipart/form-data">
+                <div><input placeholder="Username" type="text" name="login" class="login-textbox" /></div>
+                <div><input placeholder="Password" type="password" name="password" class="login-textbox" /></div>
+                <div><input placeholder="Full Name" type="text" name="name" class="login-textbox" /></div>
+                <div><input placeholder="Street" type="text" name="street" class="login-textbox" /></div>
+                <div><input placeholder="City/Suburb" type="text" name="city" class="login-textbox" /></div>
+                <div><input placeholder="State" type="text" name="state" class="login-textbox" /></div>
+                <div><input placeholder="Postcode" type="text" name="postcode" class="login-textbox" /></div>
+                <div><input placeholder="Email Address" type="text" name="email" class="login-textbox" /></div>
 
-                <tr><td align="center" colspan="1"> <input class="btn" type="submit" name="action" value="Create Account"></td></tr>
-            </table>
-
-        </form>
+                <div class="login-button"><input class="button" type="submit" name="action" value="Create Account"></div>
+            </form>
+        </div>
+        <div style="clear: both;"></div>
     </div>
 </body>
 </html>

@@ -1,3 +1,5 @@
+import json
+
 class Book(object):
 	def __init__(self, bookDict):
 		if "isbn" in bookDict:
@@ -116,12 +118,28 @@ class Book(object):
 		    self.year = None
 
 
-def makeBooks(json):
+def getBooks():
 	'''
-	creates a list of Book objects from a dictionary of dictionaries loaded
-	from a JSON file
+	returns a list of Book objects for every book in books.json
 	'''
+	booksFile = open("books.json", "r")
 	books = []
-	for bookDict in json.values():
+	for bookDict in json.load(booksFile).values():
 		books.append(Book(bookDict))
+	booksFile.close()
 	return books
+
+def getBook(isbn):
+	'''
+	returns a Book object for a specific isbn
+	'''
+	booksFile = open("books.json", "r")
+	book = Book(json.load(booksFile)[isbn])
+	booksFile.close()
+	return book
+
+def searchBooks(searchString, category="title"):
+	'''
+	returns a list of Book objects matching a search searchString
+	'''
+	books = getBooks()

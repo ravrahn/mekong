@@ -1,9 +1,20 @@
+def getHeader(searchTerms=""):
+	'''
+	in future, will check if user is logged in, etc.
+	'''
+
+	headerFile = open("header.html", "r")
+	header = headerFile.read()
+	headerFile.close()
+
+	return header
+
 def login():
 	loginFile = open("login.html", "r")
 	login = loginFile.read()
 	loginFile.close()
 
-	return login
+	return login % {"header":getHeader()}
 
 def landing():
 	landingFile = open("landing.html", "r")
@@ -18,3 +29,10 @@ def index():
 	indexFile.close()
 
 	return index
+
+def mekong_page(title):
+	mekongFile = open("mekong.html", "r")
+	mekong = mekongFile.read()
+	mekongFile.close()
+
+	return mekong % {"title":title}

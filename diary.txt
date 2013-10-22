@@ -1,2 +1,5 @@
 Date	Start	Stop	Activity
 20/10	16:00	23:00	Many things added. See commit messages.
+21/10	16:00	18:00	Working on html and css.
+22/10	08:00	08:40	More html and css work.
+22/10	10:00	11:30	More html and css work.

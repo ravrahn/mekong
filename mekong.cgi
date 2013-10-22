@@ -11,13 +11,13 @@ form = cgi.FieldStorage()
 
 print http_header()
 
-print pages.login()
+# print pages.login()
 
 # print pages.landing()
 
-
-# print makeBooks(json.load(open("books.json", "r")))
-# works!
+import random
+string = pages.login() #title=random.choice(getBooks()).title
+print string
 
 # dictionry replace %s's inside the html file
 # print html % {"title":form}
