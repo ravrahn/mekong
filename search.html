@@ -6,8 +6,11 @@
 </head>
 <body>
 %(header)s
-    <div class="content" id="search-content">
+    <div class="content" >
+        <span class="results-heading">%(numResults)s results for <span id="query">%(query)s</span></span>
+        <div id="search-content">
 %(results)s
+        </div>
     </div>
 </body>
 </html>

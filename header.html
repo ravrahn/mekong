@@ -1,15 +1,14 @@
-    <table id="navigation">
-        <tr>
-            <td id="title-column">
-                <a href="mekong.cgi" id="mekong-title">Mekong</a>
-            </td>
-            <td id="search-column">
-                <form method="post" action="mekong.cgi" enctype="multipart/form-data">
-                    <input placeholder="Search" type="text" name="search" id="search-box" />
-                </form>
-            </td>
-            <td id="user-column">
-                <a href="mekong.cgi?page=login" id="user-text">Login or Register</a>
-            </td>
-        <tr>
-    </table>
+    <div id="navigation">
+        <div id="title-column">
+            <a href="mekong.cgi" id="mekong-title">Mekong</a>
+        </div>
+        <div id="search-column">
+            <form name="search" method="post" action="mekong.cgi?page=search" enctype="multipart/form-data">
+                <input placeholder="Search" type="text" name="search" id="search-box" value="%(query)s" />
+            </form>
+        </div>
+        <div id="user-column">
+            <a href="mekong.cgi?page=login" id="user-text">Login or Register</a>
+        </div>
+        <div style="clear: both;"></div>
+    </div>

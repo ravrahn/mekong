@@ -1,4 +1,6 @@
-def getHeader(searchTerms=""):
+from books_helper import *
+
+def getHeader(query=""):
 	'''
 	in future, will check if user is logged in, etc.
 	'''
@@ -13,32 +15,48 @@ def getHeader(searchTerms=""):
 	header = headerFile.read()
 	headerFile.close()
 
-	return header % {"username": username}
+	return header % { "username": username, "query": query }
 
 def login():
+	# load the login html
+	# and return it as a string
 	loginFile = open("login.html", "r")
 	login = loginFile.read()
 	loginFile.close()
 
-	return login % {"header":getHeader()}
+	return login % { "header":getHeader() }
 
-def landing():
-	landingFile = open("landing.html", "r")
-	landing = landingFile.read()
-	landingFile.close()
+def search(query):
+	searchFile = open("search.html", "r")
+	search = searchFile.read()
+	searchFile.close()
 
-	return landing
+	resultFile = open("result.html", "r")
+	result = resultFile.read()
+	resultFile.close()
 
-def index():
-	indexFile = open("index.html", "r")
-	index = indexFile.read()
-	indexFile.close()
+	books = searchBooks(query)
 
-	return index
+	string = ""
+	for book in books:
+		string += result % { "isbn": book.get("isbn"), "imgsrc": book.get("largeimageurl"), "title": book.get("title"), "author": ", ".join(book.get("authors")), "price": book.get("price"), "rank": book.get("salesrank") }
+
+	return search % { "header":getHeader(query=query), "query": query, "numResults": str(len(books)) , "results": string }
 
 def mekong(title):
 	mekongFile = open("mekong.html", "r")
 	mekong = mekongFile.read()
 	mekongFile.close()
 
-	return mekong % {"title":title, "header":getHeader()}
+	resultFile = open("result.html", "r")
+	result = resultFile.read()
+	resultFile.close()
+
+	books = featuredBooks()
+
+	string = ""
+	for book in books:
+		string += result % { "isbn": book.get("isbn"), "imgsrc": book.get("largeimageurl"), "title": book.get("title"), "author": ", ".join(book.get("authors")), "price": book.get("price"), "rank": book.get("salesrank") }
+
+	return mekong % { "header":getHeader(), "featured": string }
+
