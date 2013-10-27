@@ -6,4 +6,4 @@ Date	Start	Stop	Activity
 23/10	15:00	17:00	Added html and css for search results
 24/10	08:00	08:30	Fixing header html/css.
 24/10	10:00	11:00	Working on header and home page.
-24/10	13:00	15:00	
+27/10	16:30	18:00	Converting books.json into an sqlite3 database

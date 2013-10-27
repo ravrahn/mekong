@@ -1,43 +1,70 @@
-import json
+import sqlite3
 import random
 
-def getBooks():
-	'''
-	returns a list of Book objects for every book in books.json
-	'''
-	booksFile = open("books.json", "r")
-	books = []
-	for bookDict in json.load(booksFile).values():
-		books.append(bookDict)
-	booksFile.close()
-	return books
+def dict_factory(cursor, row):
+    '''
+    A helper function for sqlite3 that allows rows
+    to be returned as dictionaries
+    '''
+    d = {}
+    for idx, col in enumerate(cursor.description):
+        d[col[0]] = row[idx]
+    return d
 
-def getBook(isbn):
-	'''
-	returns a Book object for a specific isbn
-	'''
-	booksFile = open("books.json", "r")
-	book = Book(json.load(booksFile)[isbn])
-	booksFile.close()
-	
-	return book
+def getBooks():
+    '''
+    returns a list of every book in the database
+    '''
+    db = sqlite3.connect("books.db")
+    db.row_factory = dict_factory
+    c = db.cursor()
+    c.execute("SELECT * FROM books")
+
+    books = []
+    for book in c:
+        books.append(book)
+    return books
 
 def searchBooks(searchString, category="title"):
-	'''
-	returns a list of Book objects matching a search searchString
-	'''
-	allBooks = getBooks()
-	random.shuffle(allBooks)
-	books = allBooks[:50]
+    '''
+    returns a list of Book objects matching a search searchString
+    '''
+    db = sqlite3.connect("books.db")
+    db.row_factory = dict_factory
+    c = db.cursor()
+    c.execute("SELECT isbn,title,authors,price,largeimageurl FROM books WHERE title LIKE \"%"+searchString+"%\"")
 
-	return books
+    books = c.fetchall()
+
+    return books
 
 def featuredBooks():
-	'''
-	returns a few featured books
-	'''
-	allBooks = getBooks()
-	topBooks = sorted(allBooks, key=lambda k: k.get("salesrank", 10000000))[:100]
-	random.shuffle(topBooks)
-	books = topBooks[:5]
-	return books
+    '''
+    returns a few featured books
+    '''
+
+
+def topBooks(amount=10):
+    '''
+    returns the top books by salesrank
+    '''
+    db = sqlite3.connect("books.db")
+    db.row_factory = dict_factory
+    c = db.cursor()
+    c.execute("SELECT isbn,title,authors,price,largeimageurl,salesrank FROM books ORDER BY salesrank LIMIT "+str(amount))
+
+    books = c.fetchall()
+
+    return books
+
+def bookDetails(isbn):
+    '''
+    returns information about one book
+    for use on the book-detail page
+    '''
+    db = sqlite3.connect("books.db")
+    db.row_factory = dict_factory
+    c = db.cursor()
+    c.execute("SELECT isbn,title,authors,price,largeimageurl,productdescription FROM books WHERE isbn = \""+isbn+"\"")
+
+    return c.fetchone()
