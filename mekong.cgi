@@ -1,11 +1,8 @@
 #!/usr/bin/python2.7
+import os,re,cgi,cgitb
 from books_helper import *
 import pages
-import json
-import os
-import re
-import cgi
-import cgitb
+
 cgitb.enable()
 
 form = cgi.FieldStorage()
@@ -18,7 +15,7 @@ print http_header()
 if "search" in form:
     # If there's a search query, search for it
     # using code from pages.py
-    string = pages.search("".join(form.getlist("search")))
+    string = pages.search("".join(form.getlist("search")), form.getfirst("category"))
 elif "login" in form.getlist("page"):
     # if the login button was clicked
     # then load to the login page
@@ -26,13 +23,13 @@ elif "login" in form.getlist("page"):
 elif "book-detail" in form.getlist("page"):
     # if a book page is requested
     # get the page for that book
-    string = pages.book_detail(form.getlist("book"))
+    string = pages.bookDetail(form.getfirst("book"))
 elif "account-detail" in form.getlist("page"):
     # if the user page is requested
     # get the page for that user
     # as long as they're logged in
     if True: #loggedInAs(form.getlist("userid")):
-        string = pages.account_detail(form.getlist("userid"))
+        string = pages.accountDetail(form.getfirst("userid"))
     else:
         string = pages.error()
 else:

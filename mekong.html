@@ -3,13 +3,18 @@
 <head>
     <title>Mekong</title>
     <link rel="stylesheet" type="text/css" href="mekong.css">
+    <link rel="shortcut icon" href="favicon.ico" />
 </head>
 <body>
 %(header)s
-    <div class="content" id="mekong-content">
-        <span id="featured-title">Featured Books</span>
+    <div class="content" id="mekong-content" >
+        <span id="featured-title">Featured</span>
         <div id="featured-books" >
 %(featured)s
+        </div>
+        <span id="top-ten-title">Bestsellers</span>
+        <div id="top-ten-books" >
+%(top-ten)s
         </div>
     </div>
 </body>

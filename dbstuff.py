@@ -10,5 +10,5 @@ def dict_factory(cursor, row):
 db = sqlite3.connect("books.db")
 db.row_factory = dict_factory
 c = db.cursor()
-c.execute("SELECT isbn,title,authors FROM books WHERE title LIKE \"%hello%\" LIMIT 5")
-print c.fetchall()
+# c.execute("SELECT isbn,title,authors FROM books WHERE title LIKE \"%hello%\" LIMIT 5")
+# print c.fetchall()

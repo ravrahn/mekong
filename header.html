@@ -3,9 +3,43 @@
             <a href="mekong.cgi" id="mekong-title">Mekong</a>
         </div>
         <div id="search-column">
-            <form name="search" method="post" action="mekong.cgi?page=search" enctype="multipart/form-data">
-                <input placeholder="Search" type="text" name="search" id="search-box" value="%(query)s" />
-            </form>
+            <script>
+                function focusSearch(isOnFocus) {
+                    if (isOnFocus) {
+                        document.getElementById("search-box-container").className="search-box-container-focus";
+                    } else {
+                        document.getElementById("search-box-container").className="search-box-container";
+                    }
+                }
+                function selectElement() {
+                    var element = document.getElementById('category-dropdown');
+                    element.value = "%(category)s";
+                }
+                window.onload = selectElement
+            </script>
+            <div id="search-box-container">
+                <form name="search" method="post" action="mekong.cgi?page=search" enctype="multipart/form-data">
+                    <div style="float: left;">
+                        <input placeholder="Search"
+                            type="text" name="search"
+                            id="search-box"
+                            value="%(query)s"
+                            onFocus="focusSearch(true)"
+                            onBlur="focusSearch(false)" />
+                    </div>
+                    <div class="select" style="float: right;">
+                        Search 
+                        <select id="category-dropdown" name="category">
+                            <option value="all">Everything</option>
+                            <option value="title">Titles</option>
+                            <option value="authors">Authors</option>
+                            <option value="isbn">ISBNs</option>
+                            <option value="productdescription">Blurbs</option>
+                        </select>
+                    </div>
+                    <div style="clear: both;"></div>
+                </form>
+            </div>
         </div>
         <div id="user-column">
             <a href="mekong.cgi?page=login" id="user-text">Login or Register</a>
