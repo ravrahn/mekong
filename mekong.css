@@ -1,12 +1,10 @@
 * {
-    margin: 0px;
-    padding: 0px;
     font-family: "Helvetica Neue", "Helvetica", "Arial";
     font-weight: 200;
 }
 
 body {
-    background-color: #de4352;
+    background-color: #de7643;
     color: #ffffff;
 }
 
@@ -275,7 +273,7 @@ h2 {
     position: relative;
     float: left;
     margin: 16px;
-    width: 128px;
+    width: 138px;
     background-color: rgba(255,255,255,0.3);
     border-radius: 3px;
 }
@@ -297,8 +295,8 @@ h2 {
     padding-left: 8px;
     padding-top: 8px;
     padding-bottom: 4px;
-    height: 186px;
-    width: 112px;
+    height: 204px;
+    width: 122px;
     overflow: hidden;
     border-radius: 3px;
     display: table-cell;
@@ -308,8 +306,8 @@ h2 {
 
 .book-img {
     border-radius: 3px;
-    width: 112px;
-    max-height: 182px;
+    width: 122px;
+    max-height: 200px;
     margin: auto;
 }
 
