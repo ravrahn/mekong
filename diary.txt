@@ -13,3 +13,4 @@ Date	Start	Stop	Activity
 31/10	10:00	11:00	Using Typekit, fonts are now Museo and Museo Sans.
 01/11	11:30	12:00	Implemented users database.
 01/11	12:00	13:00	Registering now adds user to the database.
+01/11	20:30	22:30	Email validation is now functional.

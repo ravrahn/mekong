@@ -6,7 +6,15 @@ body {
     background-color: #de7643;
     color: #ffffff;
     font-family: "museo-sans", "Helvetica Neue", "Helvetica", "Arial";
-    font-weight: 100;
+    font-weight: 300;
+}
+
+a {
+    color: white;
+}
+
+a:hover {
+    color: rgba(255,255,255,0.8);
 }
 
 .content {
@@ -34,11 +42,12 @@ input[type="text"] {
     border-radius: 5px;
     padding: 5px 10px;
     margin: 6px;
+    font-family: "museo", "Helvetica Neue", "Helvetica", "Arial";
+    font-weight: 300;
     font-size: 10pt;
     color: #000000;
     background-color: rgba(255,255,255,0.5);
     border: none;
-    font-family: "museo-sans";
 }
 
 input[type="text"]:focus {
@@ -50,7 +59,8 @@ input[type="password"] {
     border-radius: 5px;
     padding: 5px 10px;
     margin: 6px;
-    font-family: "museo-sans";
+    font-family: "museo", "Helvetica Neue", "Helvetica", "Arial";
+    font-weight: 300;
     font-size: 10pt;
     background-color: rgba(255,255,255,0.5);
     border: none;
@@ -82,7 +92,8 @@ input:-moz-placeholder {
 input[type="submit"] {
     border: none;
     border-radius: 3px;
-    font-family: "museo-sans";
+    font-family: "museo", "Helvetica Neue", "Helvetica", "Arial";
+    font-weight: 300;
     font-size: 10pt;
     padding: 5px 10px;
     margin: 6px;
@@ -105,7 +116,8 @@ input[type="submit"]:active {
 }
 
 .select select {
-    font-family: "museo-sans";
+    font-family: "museo", "Helvetica Neue", "Helvetica", "Arial";
+    font-weight: 300;
     color: rgba(0,0,0,0.6);
     padding-right: 8px;
     border: none;
@@ -128,6 +140,12 @@ select::-ms-expand {
 .select select:active {
     outline: 0;
 }
+
+
+
+
+
+
 
 /* BEGIN HEADER */
 
@@ -155,14 +173,9 @@ select::-ms-expand {
 
 #mekong-title {
     margin-left: 32px;
-    font-family: "museo";
+    font-family: "museo", "Helvetica Neue", "Helvetica", "Arial";
     font-size: 18pt;
     text-decoration: none;
-    color: white;
-}
-
-#mekong-title:hover {
-    color: rgba(255,255,255,0.8);
 }
 
 #search-column {
@@ -213,18 +226,17 @@ select::-ms-expand {
     margin-left: 32px;
     font-size: 12pt;
     text-decoration: none;
-    color: white;
-}
-
-#user-text:hover {
-    color: rgba(255,255,255,0.8);
 }
 
 
 /* END HEADER */
 
-/* BODY */
 
+
+
+
+
+/* BODY */
 
 #mekong-content {
     max-width: 1024px;
@@ -240,14 +252,14 @@ select::-ms-expand {
     width: auto;
     height: auto;
     display: block;
-    background: #de7643;
+    background: rgba(255,255,255,0.4);
     margin-bottom: 18px;
 }
 
 #featured-title {
-    font-family: "museo";
+    font-family: "museo", "Helvetica Neue", "Helvetica", "Arial";
     font-size: 16pt;
-    font-weight: bolder;
+    font-weight: 300;
 }
 
 #featured-books {
@@ -257,9 +269,9 @@ select::-ms-expand {
 }
 
 #top-ten-title {
-    font-family: "museo";
+    font-family: "museo", "Helvetica Neue", "Helvetica", "Arial";
     font-size: 16pt;
-    font-weight: bolder;
+    font-weight: 300;
 }
 
 #top-ten-books {
@@ -270,7 +282,7 @@ select::-ms-expand {
 
 .login-title {
     display: block;
-    font-family: "museo";
+    font-family: "museo", "Helvetica Neue", "Helvetica", "Arial";
     font-size: 18pt;
     font-weight: 100;
     text-align: center;
@@ -301,9 +313,9 @@ select::-ms-expand {
 }
 
 .results-heading {
-    font-family: "museo";
+    font-family: "museo", "Helvetica Neue", "Helvetica", "Arial";
     font-size: 16pt;
-    font-weight: bolder;
+    font-weight: 300;
 }
 
 #query {
@@ -355,13 +367,13 @@ select::-ms-expand {
 .book-title {
     padding-left: 8px;
     padding-right: 8px;
+    font-family: "museo", "Helvetica Neue", "Helvetica", "Arial";
     font-size: 12pt;
-    font-weight: bolder;
+    font-weight: 300;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     width: 112px;
-    font-family: "museo";
 }
 
 .book-author {
@@ -396,7 +408,7 @@ select::-ms-expand {
 .detail-title {
     font-size: 30pt;
     font-weight: 200;
-    font-family: "museo";
+    font-family: "museo", "Helvetica Neue", "Helvetica", "Arial";
 }
 
 .detail-authors {

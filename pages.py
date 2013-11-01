@@ -77,6 +77,21 @@ def login():
 
     return login % { "header":getHeader() }
 
+def validate(validated):
+
+    validate = ""
+    if validated:
+        validateFile = open("valid.html", "r")
+        validate = validateFile.read()
+        validateFile.close()
+    else:
+        validateFile = open("invalid.html", "r")
+        validate = validateFile.read()
+        validateFile.close()
+
+    return validate % { "header": getHeader() }
+
+
 def search(query, category):
     searchFile = open("search.html", "r")
     search = searchFile.read()

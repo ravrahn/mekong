@@ -16,7 +16,8 @@ c.execute("""CREATE TABLE users (
 				address TEXT,
 				city TEXT,
 				state TEXT,
-				postcode INTEGER
+				postcode INTEGER,
+				validated BOOLEAN
 			);""");
 
 db.commit()
