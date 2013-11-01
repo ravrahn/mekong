@@ -10,3 +10,6 @@ Date	Start	Stop	Activity
 27/10	10:00	11:30	Search is nearly done. Got a favicon, too.
 28/10	14:00	18:00	Completed search. Work on book detail page.
 29/10	14:00	15:00	Search categories dropdown.
+31/10	10:00	11:00	Using Typekit, fonts are now Museo and Museo Sans.
+01/11	11:30	12:00	Implemented users database.
+01/11	12:00	13:00	Registering now adds user to the database.

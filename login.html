@@ -4,12 +4,16 @@
     <title>Login - Mekong</title>
     <link rel="stylesheet" type="text/css" href="mekong.css">
     <link rel="shortcut icon" href="favicon.ico" />
+
+    <!-- Typekit -->
+    <script type="text/javascript" src="//use.typekit.net/ghj5dwk.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 </head>
 <body>
 %(header)s
     <div class="content" id="login-content">
         <div class="login-container">
-            <h2 id="login-heading">Login</h2>
+            <span class="login-title" id="login-heading">Login</span>
             <form method="post" action="mekong.cgi" enctype="multipart/form-data">
                 <div><input placeholder="Username" type="text" name="username" class="login-textbox" /></div>
                 <div><input placeholder="Password" type="password" name="password" class="login-textbox" /></div>
@@ -21,16 +25,15 @@
         <div class="vertical-line"></div>
 
         <div class="new-account-container">
-            <h2 id="register-heading">Register</h2>
+            <span class="login-title" id="register-heading">Register</span>
             <form method="post" action="mekong.cgi" enctype="multipart/form-data">
                 <div><input placeholder="Username" type="text" name="username" class="login-textbox" /></div>
                 <div><input placeholder="Password" type="password" name="password" class="login-textbox" /></div>
-                <div><input placeholder="Full Name" type="text" name="name" class="login-textbox" /></div>
-                <div><input placeholder="Street" type="text" name="street" class="login-textbox" /></div>
-                <div><input placeholder="City/Suburb" type="text" name="city" class="login-textbox" /></div>
-                <div><input placeholder="State" type="text" name="state" class="login-textbox" /></div>
-                <div><input placeholder="Postcode" type="text" name="postcode" class="login-textbox" /></div>
+                <div><input placeholder="Given Name(s)" type="text" name="firstname" class="login-textbox-short" /><input placeholder="Last Name" type="text" name="lastname" class="login-textbox-short" /></div>
                 <div><input placeholder="Email Address" type="text" name="email" class="login-textbox" /></div>
+                <div><input placeholder="Address" type="text" name="address" class="login-textbox" /></div>
+                <div><input placeholder="City/Suburb" type="text" name="city" class="login-textbox" /></div>
+                <div><input placeholder="State" type="text" name="state" class="login-textbox-short" /><input placeholder="Postcode" type="text" name="postcode" class="login-textbox-short" /></div>
 
                 <div class="login-button"><input class="button" type="submit" name="action" value="Create Account"></div>
             </form>

@@ -1,16 +1,34 @@
 #!/usr/bin/python2.7
 import os,re,cgi,cgitb
-from books_helper import *
+import userhelper
 import pages
 
 cgitb.enable()
 
 form = cgi.FieldStorage()
 
-def http_header():
-    return """Content-Type: text/html\n"""
+print """Content-Type: text/html\n
+"""
 
-print http_header()
+notification = ""
+
+if "action" in form and "Create Account" in form.getlist("action"):
+    user = {}
+    user["username"] = form.getfirst("username")
+    user["password"] = form.getfirst("password")
+    user["firstname"] = form.getfirst("firstname")
+    user["lastname"] = form.getfirst("lastname")
+    user["email"] = form.getfirst("email")
+    user["address"] = form.getfirst("address")
+    user["city"] = form.getfirst("city")
+    user["state"] = form.getfirst("state")
+    user["postcode"] = form.getfirst("postcode")
+
+    if userhelper.addUser(user):
+        # userhelper.sendVerificationEmail(username)
+        notification = "Account created. A verification email has been sent to "+user["email"]+"."
+    else:
+        notification = "Account creation failed. Please try again."
 
 if "search" in form:
     # If there's a search query, search for it
@@ -34,6 +52,6 @@ elif "account-detail" in form.getlist("page"):
         string = pages.error()
 else:
     # otherwise, home page
-    string = pages.mekong(form)
+    string = pages.mekong(form, notification=notification)
 
 print string

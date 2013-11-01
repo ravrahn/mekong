@@ -1,8 +1,7 @@
-from books_helper import *
+import bookhelper
 
 def fancyDate(date):
     date = date.split("-")
-    date.reverse()
 
     if len(date) != 3:
         return "Unknown date"
@@ -22,7 +21,7 @@ def fancyDate(date):
         12: "December"
     }
 
-    newDate = "%s %s %s" % (date[0], months[int(date[1])], date[2])
+    newDate = "%s %s, %s" % (months[int(date[1])], date[2], date[0])
 
     return newDate
 
@@ -43,7 +42,7 @@ def getHeader(query="", category="all"):
 
     return header % { "username": username, "query": query, "category": category }
 
-def mekong(title):
+def mekong(title, notification=""):
     mekongFile = open("mekong.html", "r")
     mekong = mekongFile.read()
     mekongFile.close()
@@ -52,17 +51,22 @@ def mekong(title):
     result = resultFile.read()
     resultFile.close()
 
-    featuredArr = featuredBooks()
+    featuredArr = bookhelper.featuredBooks()
     featuredString = ""
     for book in featuredArr:
         featuredString += result % book 
 
-    topArr = topBooks()
+    topArr = bookhelper.topBooks()
     topString = ""
     for book in topArr:
         topString += result % book
 
-    return mekong % { "header":getHeader(), "featured": featuredString, "top-ten": topString }
+    notificationFile = open("notification.html", "r")
+    if notification != "":
+        notification = notificationFile.read() % notification
+    notificationFile.close()
+
+    return mekong % { "header":getHeader(), "featured": featuredString, "top-ten": topString, "notification": notification }
 
 def login():
     # load the login html
@@ -82,7 +86,7 @@ def search(query, category):
     result = resultFile.read()
     resultFile.close()
 
-    books = searchBooks(query, category)
+    books = bookhelper.searchBooks(query, category)
 
     string = ""
     for book in books:
@@ -95,7 +99,7 @@ def bookDetail(isbn):
     bookDetail = bookDetailFile.read()
     bookDetailFile.close()
 
-    book = getBook(isbn)
+    book = bookhelper.getBook(isbn)
 
     book["header"] = getHeader()
 

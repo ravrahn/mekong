@@ -58,7 +58,7 @@ c.execute('''CREATE TABLE books (isbn text primary key,
     edition text
 );''')
 
-insertQuery = "INSERT INTO books values ("+",".join([":"+x for x in columns])+");"
+insertQuery = "INSERT INTO books VALUES ("+",".join([":"+x for x in columns])+");"
 
 for book in books:
     c.execute(insertQuery, defaultdict(emptyString, book))
