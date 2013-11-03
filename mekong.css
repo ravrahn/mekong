@@ -449,11 +449,16 @@ select::-ms-expand {
 }
 
 .book-form {
-    padding-left: 8px;
-    padding-right: 8px;
+    margin-left: 8px;
+    margin-right: 8px;
 }
 
-
+.book-quantity {
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 10px;
+    font-size: 10pt;
+}
 
 #detail-image-container {
     float: left;
@@ -517,13 +522,27 @@ select::-ms-expand {
     margin: 0px !important;
 }
 
-.cart-heading {
+
+
+.account-detail-heading {
     font-family: "museo", "Helvetica Neue", "Helvetica", "Arial";
     font-weight: 200;
     font-size: 22pt;
 }
 
+#checkout-button {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-top: 4px !important;
+    margin-bottom: 16px !important;
+}
+
 #cart-content {
+    margin-top: 8px;
+    overflow: hidden;
+}
+
+#orders-content {
     margin-top: 8px;
     overflow: hidden;
 }
@@ -535,4 +554,15 @@ select::-ms-expand {
     width: 58px;
     font-size: 9pt !important;
     padding: 5px !important;
+}
+
+#checkout-form-container {
+    float: left;
+}
+
+#cart-container {
+    border-left: solid 1px rgba(255,255,255,0.2);
+    padding-left: 16px;
+    margin-left: 16px;
+    float: left;
 }

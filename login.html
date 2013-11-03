@@ -8,6 +8,13 @@
     <!-- Typekit -->
     <script type="text/javascript" src="//use.typekit.net/ghj5dwk.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+    <!-- Forgot Password Text -->
+    <script>
+        function forgotPasswordText() {
+            var text = "hello"
+        }
+    </script>
 </head>
 <body>
 %(header)s
@@ -18,11 +25,15 @@
                 <div><input placeholder="Username" type="text" name="username" class="login-textbox" /></div>
                 <div><input placeholder="Password" type="password" name="password" class="login-textbox" /></div>
 
-                <div class="login-button" style="float: left;"><input class="button" type="submit" name="action" value="Login" /></div><div id="forgot-password" style="float: right;"><a href="?page=forgot-password" style="text-decoration: none;">Forgot Password?</a></div><div style="clear: both;"></div>
+                <div class="login-button" style="float: left;">
+                    <input class="button" type="submit" name="action" value="Login" />
+                </div>
+                <div id="forgot-password" style="float: right;">
+                    <a href="?page=forgot-password" style="text-decoration: none;" onhover="forgotPasswordText()">Forgot Password?</a>
+                </div>
+                <div style="clear: both;"></div>
             </form>
         </div>
-
-        <div class="vertical-line"></div>
 
         <div class="new-account-container">
             <span class="login-title" id="register-heading">Register</span>

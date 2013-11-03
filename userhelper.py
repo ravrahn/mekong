@@ -284,3 +284,59 @@ def getCartPrice(username):
         return  ""
 
     return "${0:.2f}".format(round(price,2))
+
+def getOrders(username):
+    db = sqlite3.connect("users.db")
+    c = db.cursor()
+
+    c.execute("SELECT isbn,quantity FROM orders WHERE username = ?", (username,))
+
+    books = []
+
+    for isbn, quantity in c.fetchall():
+        book = bookhelper.getBook(isbn)
+        book["quantity"] = quantity
+        books.append(book)
+
+    return books
+
+def getOrdersPrice(username):
+    db = sqlite3.connect("users.db")
+    c = db.cursor()
+
+    c.execute("SELECT isbn,quantity FROM orders WHERE username = ?", (username,))
+
+    price = 0.0
+
+    for isbn, quantity in c.fetchall():
+        book = bookhelper.getBook(isbn)
+        bookPrice = float(book["price"][1:])
+        price += bookPrice*quantity
+
+    if price == 0:
+        return  ""
+
+    return "${0:.2f}".format(round(price,2))
+
+def checkout(username, creditCard, password):
+    db = sqlite3.connect("users.db")
+    c = db.cursor()
+
+    c.execute("SELECT isbn,quantity FROM carts WHERE username = ?;", (username,))
+
+    orders = c.fetchall()
+
+    c.execute("DELETE FROM carts WHERE username = ?;", (username,))
+
+    db.commit()
+
+    for isbn,quantity in orders:
+        c.execute("SELECT quantity FROM orders WHERE username = ? AND isbn = ?;", (username,isbn))
+        currentOrder = c.fetchone()
+        if currentOrder == None:
+            c.execute("INSERT INTO orders (username, isbn, quantity) VALUES (?, ?, ?);", (username,isbn,quantity))
+        else:
+            currentOrder, = currentOrder
+            c.execute("UPDATE orders SET quantity = ? WHERE username = ? AND isbn = ?", (quantity+currentOrder, username, isbn))
+
+    db.commit()

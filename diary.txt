@@ -17,3 +17,5 @@ Date	Start	Stop	Activity
 03/11	14:30	16:00	Sessions are now functional.
 03/11	16:00	18:00	Account detail is now functional.
 03/11	20:00	21:00	Cart is now functional.
+03/11	21:00	23:00	Error page and permissions. Lots of bugfixes. Started on Checkout.
+03/11	23:00	00:00	Finished!

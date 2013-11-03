@@ -1,5 +1,5 @@
 #!/usr/bin/python2.7
-import os,re,cgi,cgitb
+import os,sys,re,cgi,cgitb
 import userhelper
 import pages
 import Cookie
@@ -46,8 +46,10 @@ if "action" in form and "Create Account" in form.getlist("action"):
 elif "action" in form and "Login" in form.getlist("action"):
     # log me in
     if userhelper.isCorrectPassword(form.getfirst("username"), form.getfirst("password")):
-        notification = "Successful! You have been logged in as "+form.getfirst("username")
         cookieSet = userhelper.createSessionCookie(form.getfirst("username"))
+        print http_header(cookieSet)
+        print pages.redirect("http://cgi.cse.unsw.edu.au/~obca109/mekong/mekong.cgi")
+        sys.exit()
     else:
         notification = "Username or password incorrect. Please try again"
 elif "action" in form and "Log Out" in form.getlist("action"):
@@ -73,13 +75,18 @@ elif "action" in form and "Remove" in form.getlist("action"):
     book = form.getfirst("book")
     username = form.getfirst("username")
     userhelper.removeFromCart(username, book)
+elif "action" in form and "Checkout" in form.getlist("action"):
+    # checkout the books
+    username = form.getfirst("username")
+    creditCard = form.getfirst("credit-card")
+    userhelper.checkout(username, creditCard)
 
 print http_header(cookieSet)
 
 # 
 # HTML STUFF
 # 
-if "search" in form:
+if "search" in form and "search" in form.getlist("page"):
     # If there's a search query, search for it
     # using code from pages.py
     string = pages.search("".join(form.getlist("search")), form.getfirst("category"))
@@ -96,14 +103,20 @@ elif "validate" in form.getlist("page"):
     userHash = form.getfirst("user")
     validated = userhelper.validateUser(userHash)
     string = pages.validate(validated)
-elif "book-detail" in form.getlist("page"):
+elif "book-detail" in form.getlist("page") and "book" in form:
     # if a book page is requested
     # get the page for that book
     string = pages.bookDetail(form.getfirst("book"))
-elif "account-detail" in form.getlist("page"):
+elif "account-detail" in form.getlist("page") and "username" in form:
     # if the user page is requested
     # get the page for that user
     string = pages.accountDetail(form.getfirst("username"))
+elif "checkout" in form.getlist("page") and "username" in form:
+    # if the checkout page is requested
+    # and a user is provided
+    string = pages.checkout(form.getfirst("username"))
+elif "page" in form:
+    string = pages.error()
 else:
     # otherwise, home page
     string = pages.mekong(form, notification=notification)

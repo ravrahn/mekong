@@ -20,9 +20,16 @@
             </div>
         </form>
         <br >
-        <span class="cart-heading" >Your Cart%(cartsuffix)s</span>
+        <span class="account-detail-heading" >Your Cart%(cartsuffix)s</span>
         <div id="cart-content">
 %(cart)s
+        </div>
+        <form method="post" action="mekong.cgi?page=checkout&username=%(username)s" enctype="multipart/form-data">
+            <input id="checkout-button" type="submit" name="go" value="Checkout" />
+        </form>
+        <span class="account-detail-heading" >Your Orders%(ordersuffix)s</span>
+        <div id="orders-content">
+%(orders)s
         </div>
     </div>
 </body>

@@ -122,44 +122,113 @@ def search(query, category):
     return search % { "header":getHeader(query=query, category=category), "query": query, "numResults": str(len(books)) , "results": string }
 
 def bookDetail(isbn):
-    bookDetailFile = open("bookDetail.html", "r")
-    bookDetail = bookDetailFile.read()
-    bookDetailFile.close()
+    if bookhelper.getBook(isbn) != None:
+        bookDetailFile = open("bookDetail.html", "r")
+        bookDetail = bookDetailFile.read()
+        bookDetailFile.close()
 
-    book = bookhelper.getBook(isbn)
+        book = bookhelper.getBook(isbn)
 
-    book["header"] = getHeader()
+        book["header"] = getHeader()
 
-    book["releasedate"] = fancyDate(book["releasedate"])
+        book["releasedate"] = fancyDate(book["releasedate"])
 
-    if userhelper.isLoggedIn():
-        book["disabled"] = ""
-        book["cartmessage"] = "Add to Cart"
+        if userhelper.isLoggedIn():
+            book["disabled"] = ""
+            book["cartmessage"] = "Add to Cart"
+        else:
+            book["disabled"] = "disabled"
+            book["cartmessage"] = "Login to purchase"
+
+        book["username"] = userhelper.getCurrentUser()
+
+        return bookDetail % book
     else:
-        book["disabled"] = "disabled"
-        book["cartmessage"] = "Login to purchase"
-
-    book["username"] = userhelper.getCurrentUser()
-
-    return bookDetail % book
+        return error()
 
 def accountDetail(username):
-    accountDetailFile = open("accountDetail.html", "r")
-    accountDetail = accountDetailFile.read()
-    accountDetailFile.close()
+    if userhelper.loggedInAs(username):
+        accountDetailFile = open("accountDetail.html", "r")
+        accountDetail = accountDetailFile.read()
+        accountDetailFile.close()
 
-    realname = userhelper.getRealName(username)
+        realname = userhelper.getRealName(username)
 
-    cartResultFile = open("cartResult.html", "r")
-    cartResult = cartResultFile.read()
-    cartResultFile.close()
+        cartResultFile = open("cartResult.html", "r")
+        cartResult = cartResultFile.read()
+        cartResultFile.close()
 
-    cart = ""
-    for book in userhelper.getCart(username):
-        book["username"] = username
-        cart += cartResult % book
+        cart = ""
+        for book in userhelper.getCart(username):
+            book["username"] = username
+            cart += cartResult % book
 
-    if cart == "":
-        return accountDetail % { "header": getHeader(), "username": username, "realname": realname, "cart": cart, "cartsuffix": " is empty" }
+        cartSuffix = ""
+        if cart == "":
+            cartSuffix = " is empty"
+        else:
+            cartSuffix = "'s price: "+userhelper.getCartPrice(username)
 
-    return accountDetail % { "header": getHeader(), "username": username, "realname": realname, "cart": cart, "cartsuffix": "'s price: "+userhelper.getCartPrice(username) }
+        orderResultFile = open("orderResult.html", "r")
+        orderResult = orderResultFile.read()
+        orderResultFile.close()
+
+        orders = ""
+        for book in userhelper.getOrders(username):
+            book["username"] = username
+            orders += orderResult % book
+
+        orderSuffix = ""
+        if orders == "":
+            orderSuffix = " is empty"
+        else:
+            orderSuffix = "' price: "+userhelper.getOrdersPrice(username)
+
+        return accountDetail % {
+            "header": getHeader(),
+            "username": username,
+            "realname": realname,
+            "cartsuffix": cartSuffix,
+            "cart": cart,
+            "ordersuffix": orderSuffix,
+            "orders": orders
+        }
+    else:
+        return error()
+
+def checkout(username):
+    if userhelper.loggedInAs(username) and len(userhelper.getCart(username)) > 0:
+        checkoutFile = open("checkout.html", "r")
+        checkout = checkoutFile.read()
+        checkoutFile.close()
+
+        checkoutResultFile = open("checkoutResult.html", "r")
+        checkoutResult = checkoutResultFile.read()
+        checkoutResultFile.close()
+
+        cart = ""
+        for book in userhelper.getCart(username):
+            cart += checkoutResult % book
+
+        return checkout % {
+            "header": getHeader(),
+            "username": username,
+            "cartsuffix": "'s price: "+userhelper.getCartPrice(username),
+            "cart": cart
+        }
+    else:
+        return error()
+
+def error():
+    errorFile = open("error.html", "r")
+    error = errorFile.read()
+    errorFile.close()
+
+    return error % { "header": getHeader() }
+
+def redirect(url):
+    redirectFile = open("redirect.html", "r")
+    redirect = redirectFile.read()
+    redirectFile.close()
+
+    return redirect % url

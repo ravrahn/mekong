@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Checkout - Mekong</title>
+    <link rel="stylesheet" type="text/css" href="mekong.css">
+    <link rel="shortcut icon" href="favicon.ico" />
+
+    <!-- Typekit -->
+    <script type="text/javascript" src="//use.typekit.net/ghj5dwk.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+<body>
+%(header)s
+    <div class="content" id="checkout-content" >
+        <div id="checkout-form-container">
+            <form method="post" action="mekong.cgi?page=account-detail&username=%(username)s" enctype="multipart/form-data">
+                <div><input placeholder="Credit Card" type="text" name="credit-card" class="login-textbox" autocomplete="off" /></div>
+                <div>Expiry date: <input type="number" name="month" min="01" max="12" value="1"/> / <input type="number" name="year" min="13" max="30" value="17" /></div>
+
+                <div class="login-button"><input class="button" type="submit" name="action" value="Checkout" /></div>
+            </form>
+        </div>
+
+        <div id="cart-container">
+            <span class="account-detail-heading" >Your Cart%(cartsuffix)s</span>
+            <div id="cart-content">
+%(cart)s
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+</body>
+</html>
