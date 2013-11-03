@@ -52,6 +52,15 @@ elif "action" in form and "Login" in form.getlist("action"):
         sys.exit()
     else:
         notification = "Username or password incorrect. Please try again"
+elif "action" in form and "Forgot Password?" in form.getlist("action"):
+    # send forgot password email
+    username = form.getfirst("username")
+    notification = userhelper.sendForgotPasswordEmail(username)
+elif "action" in form and "Reset Password" in form.getlist("action"):
+    # reset the password
+    userHash = form.getfirst("user")
+    password = form.getfirst("password")
+    userhelper.resetPassword(userHash, password)
 elif "action" in form and "Log Out" in form.getlist("action"):
     # log me out
     if userhelper.isLoggedIn():
@@ -102,6 +111,10 @@ elif "login" in form.getlist("page"):
         string = pages.accountDetail(userhelper.getCurrentUser())
     else:
         string = pages.login()
+elif "forgot-password" in form.getlist("page"):
+    # password reset
+    userHash = form.getlist("user")
+    string = pages.forgotPassword(userHash)
 elif "validate" in form.getlist("page"):
     # if we need to validate a user's account
     # then we validate a user's account

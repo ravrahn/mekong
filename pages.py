@@ -89,6 +89,9 @@ def login():
 
     return login % { "header":getHeader() }
 
+def forgotPassword(userHash):
+    # reset the password
+
 def validate(validated):
 
     validate = ""

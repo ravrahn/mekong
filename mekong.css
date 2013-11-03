@@ -339,14 +339,8 @@ select::-ms-expand {
     float: right;
 }
 
-#forgot-password {
-    font-size: 10pt;
-    padding-top: 12px;
-    padding-right: 8px;
-}
-
-#forgot-password:hover {
-    color: rgba(255,255,255,0.6);
+#forgot-password-container {
+    width: 22em;
 }
 
 

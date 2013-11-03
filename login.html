@@ -24,14 +24,16 @@
             <form method="post" action="mekong.cgi" enctype="multipart/form-data">
                 <div><input placeholder="Username" type="text" name="username" class="login-textbox" /></div>
                 <div><input placeholder="Password" type="password" name="password" class="login-textbox" /></div>
+                <div>
+                    <div class="login-button" style="float: left;">
+                        <input class="button" type="submit" name="action" value="Login" />
+                    </div>
+                    <div id="forgot-password" style="float: right;">
+                        <input class="button" type="submit" name="action" value="Forgot Password?" />
 
-                <div class="login-button" style="float: left;">
-                    <input class="button" type="submit" name="action" value="Login" />
+                    </div>
+                    <div style="clear: both;"></div>
                 </div>
-                <div id="forgot-password" style="float: right;">
-                    <a href="?page=forgot-password" style="text-decoration: none;" onhover="forgotPasswordText()">Forgot Password?</a>
-                </div>
-                <div style="clear: both;"></div>
             </form>
         </div>
 

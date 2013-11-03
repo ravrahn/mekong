@@ -113,11 +113,72 @@ def validateUser(userHash):
 
     for username, in c.fetchall():
         if hashUser(username) == userHash:
-            c.execute("UPDATE users SET validated=1 WHERE username=?", (username,))
+            c.execute("UPDATE users SET validated=1 WHERE username=? AND validated = 1", (username,))
             db.commit()
             return True
 
     return False
+
+
+def sendForgotPasswordEmail(username):
+    db = sqlite3.connect("users.db")
+    c = db.cursor()
+
+    c.execute("SELECT email FROM users WHERE username = ?;", (username,))
+    results = c.fetchone()
+
+    email = ""
+    if results == None:
+        return "Error: No email found for that username"
+    else:
+        email, = results
+
+    mailServer = smtplib.SMTP("smtp.gmail.com", 587)
+    mailServer.ehlo()
+    mailServer.starttls()
+    mailServer.ehlo()
+    mailServer.login("mekong.com.au@gmail.com", "mekongasdf") # shh it's secret
+
+    url = "http://cgi.cse.unsw.edu.au/~obca109/mekong/mekong.cgi?page=forgot-password&user="+hashUser(username)
+
+    htmlContent = """<html>
+    <head></head>
+    <body>
+        Hello!<br >
+        <br >
+        You are receiving this email because you forgot your password.<br >
+        <br >
+        <a href="%(url)s">Click here</a> or go to the address below to reset your password.<br >
+        <br >
+        %(url)s<br >
+        <br >
+        Thanks for using Mekong!
+    </body>
+</html>""" % { "url": url, "username": username }
+
+    msg = MIMEMultipart()
+    msg["Subject"] = "Mekong Password Reset"
+    msg["From"] = "mekong.com.au@gmail.com"
+    msg["To"] = email
+
+    msg.attach(MIMEText(htmlContent, "html"))
+
+    mailServer.sendmail("mekong.com.au@gmail.com", email, msg.as_string())
+
+    return "An email was sent to "+email+" with a reset link."
+
+def resetPassword(userHash, newPassword):
+    db = sqlite3.connect("users.db")
+    c = db.cursor()
+
+    passwordHash = hashlib.md5(newPassword).hexdigest()
+
+    c.execute("SELECT username FROM users")
+
+    for username, in c.fetchall():
+        if hashUser(username) == userHash:
+            c.execute("UPDATE users SET password = ? WHERE username=?", (passwordHash, username))
+            db.commit()
 
 def isCorrectPassword(username, passwordText):
     db = sqlite3.connect("users.db")

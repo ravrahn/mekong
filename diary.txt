@@ -19,3 +19,4 @@ Date	Start	Stop	Activity
 03/11	20:00	21:00	Cart is now functional.
 03/11	21:00	23:00	Error page and permissions. Lots of bugfixes. Started on Checkout.
 03/11	23:00	00:00	Finished!
+04/11	00:00	00:45	OK, maybe not. Implemented "Forgot Password" feature.
