@@ -7,11 +7,22 @@ cgitb.enable()
 
 form = cgi.FieldStorage()
 
-print """Content-Type: text/html\n
+def http_header(cookie):
+    if cookie != None:
+        return """Content-Type: text/html
+%s
+""" % cookie
+    else:
+        return """Content-Type: text/html
 """
 
 notification = ""
 
+cookieSet = None
+
+# 
+# USER STUFF
+# 
 if "action" in form and "Create Account" in form.getlist("action"):
     # make a user dictionary
     user = {}
@@ -25,7 +36,7 @@ if "action" in form and "Create Account" in form.getlist("action"):
     user["state"] = form.getfirst("state")
     user["postcode"] = form.getfirst("postcode")
 
-    # add the user and check if it was successful
+    # attempt to add the user to the database and check if it was successful
     if userhelper.addUser(user):
         userhelper.sendValidationEmail(user["username"], user["email"])
         notification = "Account created. A validation email has been sent to "+user["email"]+"."
@@ -33,9 +44,22 @@ if "action" in form and "Create Account" in form.getlist("action"):
         notification = "Account creation failed. Please try again."
 elif "action" in form and "Login" in form.getlist("action"):
     # log me in
-    print "<!-- log in! -->"
+    if userhelper.loginUser(form.getfirst("username"), form.getfirst("password")):
+        notification = "Successful! You have been logged in as "+form.getfirst("username")
+        cookieSet = userhelper.createSessionCookie(form.getfirst("username"))
+    else:
+        notification = "Username or password incorrect. Please try again"
+elif "action" in form and "Log out" in form.getlist("action"):
+    # log me out
+    if userhelper.isLoggedIn():
+        userhelper.logOut(userhelper.getCurrentUser())
+
+print http_header(cookieSet)
 
 
+# 
+# HTML STUFF
+# 
 if "search" in form:
     # If there's a search query, search for it
     # using code from pages.py
@@ -43,7 +67,10 @@ if "search" in form:
 elif "login" in form.getlist("page"):
     # if the login button was clicked
     # then load to the login page
-    string = pages.login()
+    if userhelper.isLoggedIn():
+        string = pages.accountDetail(userhelper.getCurrentUser())
+    else:
+        string = pages.login()
 elif "validate" in form.getlist("page"):
     # if we need to validate a user's account
     # then we validate a user's account
@@ -58,8 +85,8 @@ elif "account-detail" in form.getlist("page"):
     # if the user page is requested
     # get the page for that user
     # as long as they're logged in
-    if True: #loggedInAs(form.getlist("userid")):
-        string = pages.accountDetail(form.getfirst("userid"))
+    if userhelper.loggedInAs(form.getfirst("username")):
+        string = pages.accountDetail(form.getfirst("username"))
     else:
         string = pages.error()
 else:

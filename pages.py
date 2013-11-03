@@ -1,4 +1,5 @@
 import bookhelper
+import userhelper
 
 def fancyDate(date):
     date = date.split("-")
@@ -26,21 +27,31 @@ def fancyDate(date):
     return newDate
 
 def getHeader(query="", category="all"):
-    '''
-    in future, will check if user is logged in, etc.
-    '''
-    username = "Login or Register"
-    headerSrc = "header.html"
+    # returns the raw html for the fixed header
+    # at the top of the page
 
     # if user is logged in.
     # then use the logged-in header
     # comment in haiku
+    username = userhelper.getCurrentUser()
 
-    headerFile = open(headerSrc, "r")
+    user = ""
+
+    if username != None:
+        userFile = open("userLoggedIn.html", "r")
+        user = userFile.read()
+        user = user % { "username": username }
+        userFile.close()
+    else:
+        userFile = open("userLoggedOut.html", "r")
+        user = userFile.read()
+        userFile.close()
+
+    headerFile = open("header.html", "r")
     header = headerFile.read()
     headerFile.close()
 
-    return header % { "username": username, "query": query, "category": category }
+    return header % { "user": user, "query": query, "category": category }
 
 def mekong(title, notification=""):
     mekongFile = open("mekong.html", "r")
@@ -120,4 +131,18 @@ def bookDetail(isbn):
 
     book["releasedate"] = fancyDate(book["releasedate"])
 
+    if userhelper.isLoggedIn():
+        book["disabled"] = ""
+        book["cartmessage"] = "Add to Cart"
+    else:
+        book["disabled"] = "disabled"
+        book["cartmessage"] = "Login to purchase"
+
     return bookDetail % book
+
+def accountDetail(username):
+    accountDetailFile = open("accountDetail.html", "r")
+    accountDetail = accountDetailFile.read()
+    accountDetailFile.close()
+
+    return accountDetail

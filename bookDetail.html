@@ -5,7 +5,6 @@
     <link rel="stylesheet" type="text/css" href="mekong.css">
     <link rel="shortcut icon" href="favicon.ico" />
 
-
     <!-- Typekit -->
     <script type="text/javascript" src="//use.typekit.net/ghj5dwk.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
@@ -20,7 +19,10 @@
             <span class="detail-title">%(title)s</span><br >
             <span class="detail-price">%(price)s</span><br >
             Written by <span class="detail-authors">%(authors)s</span><br >
-            Published by <span class="detail-publisher">%(publisher)s</span> on <span class="detail-pub-date">%(releasedate)s</span><br ><br >
+            Published by <span class="detail-publisher">%(publisher)s</span> on <span class="detail-pub-date">%(releasedate)s</span><br >
+            <form method="post" action="?page=cart" enctype="multipart/form-data">
+                <input id="cart-button" type="submit" name="action" value="%(cartmessage)s" %(disabled)s/>
+            </form>
             <span class="detail-description">%(productdescription)s</span>
         </div>
         <div style="clear: both;"></div>

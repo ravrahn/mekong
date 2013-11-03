@@ -1,22 +1,29 @@
+# for accessing the databases
 import sqlite3
+# for hashing passwords
 import hashlib
+# for sending emails
 import smtplib
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText
+# for managing sessions
+import Cookie
+import uuid
+import os
+
 
 def hashUser(username):
     db = sqlite3.connect("users.db")
     c = db.cursor()
 
-    c.execute("SELECT uuid FROM users WHERE username = \""+username+"\"")
+    c.execute("SELECT password FROM users WHERE username = \""+username+"\"")
 
-    userid = c.fetchone()
+    password, = c.fetchone()
 
-    return hashlib.md5(str(userid)).hexdigest()
+    return hashlib.md5(password+username).hexdigest()
 
 def addUser(user):
     columns = [
-        "uuid",
         "username",
         "password",
         "firstname",
@@ -52,7 +59,6 @@ def addUser(user):
     if len(c.fetchall()) > 0:
         return False
 
-    user["uuid"] = None
     user["validated"] = False
 
     passwordHash = hashlib.md5(user["password"]).hexdigest()
@@ -104,18 +110,22 @@ def validateUser(userHash):
     db = sqlite3.connect("users.db")
     c = db.cursor()
 
-    
+    c.execute("SELECT username FROM users")
 
-    c.execute("SELECT uuid,username FROM users")
-
-    for uuid,username in c.fetchall():
+    for username, in c.fetchall():
         if hashUser(username) == userHash:
-            c.execute("UPDATE users SET validated=1 WHERE uuid="+str(uuid))
+            c.execute("UPDATE users SET validated=1 WHERE username=\""+username+"\"")
             db.commit()
             return True
 
     return False
 
+def loginUser(username, passwordText):
+    if isCorrectPassword(username, passwordText):
+        # cookie stuff goes here
+        return True
+    else:
+        return False
 
 def isCorrectPassword(username, passwordText):
     db = sqlite3.connect("users.db")
@@ -128,7 +138,7 @@ def isCorrectPassword(username, passwordText):
     if len(results) != 1:
         return False
 
-    results = results[0]
+    results, = results[0]
 
     passwordHash = hashlib.md5(passwordText).hexdigest()
 
@@ -137,3 +147,73 @@ def isCorrectPassword(username, passwordText):
     else:
         return False
 
+
+def getSessionId(username):
+    db = sqlite3.connect("users.db")
+    c = db.cursor()
+
+    c.execute("SELECT sessionid FROM sessions WHERE username=\""+username+"\"")
+    currentSessions = c.fetchall()
+
+    if len(currentSessions) > 0:
+        sessionid, = currentSessions[0]
+    else:
+        sessionid = str(uuid.uuid4()) # so random
+        c.execute("INSERT INTO sessions (sessionid, username) VALUES(?, ?);", (sessionid, username))
+        db.commit()
+
+    return sessionid
+
+def getUsername(sessionid):
+    db = sqlite3.connect("users.db")
+    c = db.cursor()
+
+    if sessionid == None:
+        return None
+
+    c.execute("SELECT username FROM sessions WHERE sessionid=\""+sessionid+"\"")
+    currentUsers = c.fetchall()
+
+    if len(currentUsers) > 0:
+        currentUser, = currentUsers[0]
+        return currentUser
+    else:
+        return None
+
+def getCurrentUser():
+    cookie = Cookie.SimpleCookie(os.getenv("HTTP_COOKIE"))
+
+    if cookie.has_key("sessionid"):
+        currentSession = cookie["sessionid"].value
+        return getUsername(currentSession)
+    else:
+        return None
+
+def loggedInAs(username):
+    if getCurrentUser() == username:
+        return True
+    else:
+        return False
+
+
+def isLoggedIn():
+    cookie = Cookie.SimpleCookie(os.getenv("HTTP_COOKIE"))
+
+    if cookie.has_key("sessionid"):
+        return True
+    else:
+        return False
+
+def createSessionCookie(username):
+    cookie = Cookie.SimpleCookie()
+
+    cookie["sessionid"].value = getSessionId(username)
+
+    return cookie.output()
+
+def logOut(username):
+    db = sqlite3.connect("users.db")
+    c = db.cursor()
+
+    c.execute("DELETE FROM sessions WHERE username = ?", (username,))
+    db.commit()

@@ -5,10 +5,10 @@ db = sqlite3.connect("users.db")
 c = db.cursor()
 
 c.execute("DROP TABLE IF EXISTS users")
+c.execute("DROP TABLE IF EXISTS sessions")
 
 c.execute("""CREATE TABLE users (
-				uuid INTEGER PRIMARY KEY AUTOINCREMENT,
-				username TEXT,
+				username TEXT PRIMARY KEY,
 				password TEXT,
 				firstname TEXT,
 				lastname TEXT,
@@ -19,5 +19,10 @@ c.execute("""CREATE TABLE users (
 				postcode INTEGER,
 				validated BOOLEAN
 			);""");
+
+c.execute("""CREATE TABLE sessions (
+				sessionid TEXT PRIMARY KEY,
+				username TEXT
+			);""")
 
 db.commit()

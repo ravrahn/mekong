@@ -19,7 +19,7 @@
             </script>
             <div id="search-box-container">
                 <form name="search" method="post" action="mekong.cgi?page=search" enctype="multipart/form-data">
-                    <div style="float: left;">
+                    <div style="float: left;padding-top: 6px;padding-left: 12px;">
                         <input placeholder="Search"
                             type="text" name="search"
                             id="search-box"
@@ -27,22 +27,28 @@
                             onFocus="focusSearch(true)"
                             onBlur="focusSearch(false)" />
                     </div>
-                    <div class="select" style="float: right;">
-                        <span id="search-category">Search</span> 
-                        <select id="category-dropdown" name="category">
-                            <option value="all">Everything</option>
-                            <option value="title">Titles</option>
-                            <option value="authors">Authors</option>
-                            <option value="isbn">ISBNs</option>
-                            <option value="productdescription">Blurbs</option>
-                        </select>
+                    <div id="search-options-container" style="float: right;">
+                        <div class="select" style="float: left;padding-top: 6px;">
+                            <span id="search-category">Search</span> 
+                            <select id="category-dropdown" name="category">
+                                <option value="all">Everything</option>
+                                <option value="title">Titles</option>
+                                <option value="authors">Authors</option>
+                                <option value="isbn">ISBNs</option>
+                                <option value="productdescription">Blurbs</option>
+                            </select>
+                        </div>
+                        <div class="go-button" style="float: right;">
+                            <input class="button" id="go-button" type="submit" name="go" value="Go"/>
+                        </div>
+                        <div style="clear: both;"></div>
                     </div>
                     <div style="clear: both;"></div>
                 </form>
             </div>
         </div>
         <div id="user-column">
-            <a href="mekong.cgi?page=login" id="user-text">Login or Register</a>
+            %(user)s
         </div>
         <div style="clear: both;"></div>
     </div>
