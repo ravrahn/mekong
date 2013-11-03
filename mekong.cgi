@@ -75,6 +75,11 @@ elif "action" in form and "Remove" in form.getlist("action"):
     book = form.getfirst("book")
     username = form.getfirst("username")
     userhelper.removeFromCart(username, book)
+elif "action" in form and "Cancel" in form.getlist("action"):
+    # remove from cart
+    book = form.getfirst("book")
+    username = form.getfirst("username")
+    userhelper.removeFromOrders(username, book)
 elif "action" in form and "Checkout" in form.getlist("action"):
     # checkout the books
     username = form.getfirst("username")

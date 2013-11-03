@@ -4,11 +4,10 @@
                 <div class="book-title" >%(title)s</div>
                 <div class="book-author" >%(authors)s</div>
                 <div class="book-price-cart" >%(price)s</div>
+                <div class="book-quantity" >Quantity: %(quantity)s</div>
                 <div class="book-form" >
 	                <form method="post" action="mekong.cgi?page=account-detail&username=%(username)s" enctype="multipart/form-data">
-	                	<label id="quantity-label" for="quantity">Quantity: </label><input id="quantity" type="number" name="quantity" value="%(quantity)s" min="1" max="99" step="1" />
 	                	<div>
-	                		<input class="cart-button" style="float: left;" type="submit" name="action" value="Update" />
 	                		<input class="cart-button" style="float: right;" type="submit" name="action" value="Cancel" />
 	                		<div style="clear: both;"></div>
                 		</div>

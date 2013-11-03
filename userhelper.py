@@ -285,6 +285,13 @@ def getCartPrice(username):
 
     return "${0:.2f}".format(round(price,2))
 
+def removeFromOrders(username, isbn):
+    db = sqlite3.connect("users.db")
+    c = db.cursor()
+
+    c.execute("DELETE FROM orders WHERE username = ? AND isbn = ?", (username, isbn))
+    db.commit()
+
 def getOrders(username):
     db = sqlite3.connect("users.db")
     c = db.cursor()
@@ -318,7 +325,7 @@ def getOrdersPrice(username):
 
     return "${0:.2f}".format(round(price,2))
 
-def checkout(username, creditCard, password):
+def checkout(username, creditCard):
     db = sqlite3.connect("users.db")
     c = db.cursor()
 
