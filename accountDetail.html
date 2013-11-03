@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>%(title)s - Mekong</title>
+    <title>%(username)s - Mekong</title>
     <link rel="stylesheet" type="text/css" href="mekong.css">
     <link rel="shortcut icon" href="favicon.ico" />
 
@@ -12,7 +12,18 @@
 <body>
 %(header)s
     <div class="content" id="detail-content" >
-        
+        <form method="post" action="mekong.cgi" enctype="multipart/form-data">
+            <div>
+                <span class="account-username" style="float: left;">%(realname)s - %(username)s</span>
+                <input id="logout-button" type="submit" name="action" value="Log Out" style="float: right;" />
+                <div style="clear: both;"></div>
+            </div>
+        </form>
+        <br >
+        <span class="cart-heading" >Your Cart%(cartsuffix)s</span>
+        <div id="cart-content">
+%(cart)s
+        </div>
     </div>
 </body>
 </html>

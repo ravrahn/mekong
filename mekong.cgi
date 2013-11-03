@@ -2,6 +2,7 @@
 import os,re,cgi,cgitb
 import userhelper
 import pages
+import Cookie
 
 cgitb.enable()
 
@@ -44,18 +45,36 @@ if "action" in form and "Create Account" in form.getlist("action"):
         notification = "Account creation failed. Please try again."
 elif "action" in form and "Login" in form.getlist("action"):
     # log me in
-    if userhelper.loginUser(form.getfirst("username"), form.getfirst("password")):
+    if userhelper.isCorrectPassword(form.getfirst("username"), form.getfirst("password")):
         notification = "Successful! You have been logged in as "+form.getfirst("username")
         cookieSet = userhelper.createSessionCookie(form.getfirst("username"))
     else:
         notification = "Username or password incorrect. Please try again"
-elif "action" in form and "Log out" in form.getlist("action"):
+elif "action" in form and "Log Out" in form.getlist("action"):
     # log me out
     if userhelper.isLoggedIn():
         userhelper.logOut(userhelper.getCurrentUser())
+        cookieSet = Cookie.SimpleCookie()
+        cookieSet["sessionid"] = ""
+        cookieSet["sessionid"]["expires"] = "Thu, 01-Jan-1970 00:00:10 GMT"
+elif "action" in form and "Add to Cart" in form.getlist("action"):
+    # add the book to the cart
+    book = form.getfirst("book")
+    quantity = int(form.getfirst("quantity"))
+    userhelper.addToCart(userhelper.getCurrentUser(), book, quantity)
+elif "action" in form and "Update" in form.getlist("action"):
+    # update the quantity
+    book = form.getfirst("book")
+    newQuantity = form.getfirst("quantity")
+    username = form.getfirst("username")
+    userhelper.setQuantity(username, book, newQuantity)
+elif "action" in form and "Remove" in form.getlist("action"):
+    # remove from cart
+    book = form.getfirst("book")
+    username = form.getfirst("username")
+    userhelper.removeFromCart(username, book)
 
 print http_header(cookieSet)
-
 
 # 
 # HTML STUFF
@@ -84,11 +103,7 @@ elif "book-detail" in form.getlist("page"):
 elif "account-detail" in form.getlist("page"):
     # if the user page is requested
     # get the page for that user
-    # as long as they're logged in
-    if userhelper.loggedInAs(form.getfirst("username")):
-        string = pages.accountDetail(form.getfirst("username"))
-    else:
-        string = pages.error()
+    string = pages.accountDetail(form.getfirst("username"))
 else:
     # otherwise, home page
     string = pages.mekong(form, notification=notification)

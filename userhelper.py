@@ -10,6 +10,8 @@ from email.MIMEText import MIMEText
 import Cookie
 import uuid
 import os
+# for cart stuff
+import bookhelper
 
 
 def hashUser(username):
@@ -40,18 +42,15 @@ def addUser(user):
     c = db.cursor()
 
     # if any of the text has not been entered
-    if ("username" not in user or
-        "password" not in user or
-        "firstname" not in user or
-        "lastname" not in user or
-        "email" not in user or
-        "address" not in user or
-        "city" not in user or
-        "state" not in user or
-        "postcode" not in user):
-        print "<!-- "
-        print user
-        print " -->"
+    if ("username" not in user or user["username"] == "" or
+        "password" not in user or user["password"] == "" or
+        "firstname" not in user or user["firstname"] == "" or
+        "lastname" not in user or user["lastname"] == "" or
+        "email" not in user or user["email"] == "" or
+        "address" not in user or user["address"] == "" or
+        "city" not in user or user["city"] == "" or
+        "state" not in user or user["state"] == "" or
+        "postcode" not in user or user["postcode"] == ""):
         return False
 
     c.execute("SELECT username FROM users WHERE username = \""+user["username"]+"\"")
@@ -114,18 +113,11 @@ def validateUser(userHash):
 
     for username, in c.fetchall():
         if hashUser(username) == userHash:
-            c.execute("UPDATE users SET validated=1 WHERE username=\""+username+"\"")
+            c.execute("UPDATE users SET validated=1 WHERE username=?", (username,))
             db.commit()
             return True
 
     return False
-
-def loginUser(username, passwordText):
-    if isCorrectPassword(username, passwordText):
-        # cookie stuff goes here
-        return True
-    else:
-        return False
 
 def isCorrectPassword(username, passwordText):
     db = sqlite3.connect("users.db")
@@ -147,12 +139,23 @@ def isCorrectPassword(username, passwordText):
     else:
         return False
 
+def getRealName(username):
+    db = sqlite3.connect("users.db")
+    c = db.cursor()
+
+    c.execute("SELECT firstname,lastname FROM users WHERE username = ?", (username,))
+
+    firstname,lastname = c.fetchone()
+
+    return firstname+" "+lastname
+
+
 
 def getSessionId(username):
     db = sqlite3.connect("users.db")
     c = db.cursor()
 
-    c.execute("SELECT sessionid FROM sessions WHERE username=\""+username+"\"")
+    c.execute("SELECT sessionid FROM sessions WHERE username = ?", (username,))
     currentSessions = c.fetchall()
 
     if len(currentSessions) > 0:
@@ -207,7 +210,7 @@ def isLoggedIn():
 def createSessionCookie(username):
     cookie = Cookie.SimpleCookie()
 
-    cookie["sessionid"].value = getSessionId(username)
+    cookie["sessionid"] = getSessionId(username)
 
     return cookie.output()
 
@@ -217,3 +220,67 @@ def logOut(username):
 
     c.execute("DELETE FROM sessions WHERE username = ?", (username,))
     db.commit()
+
+
+
+def setQuantity(username, isbn, quantity):
+    db = sqlite3.connect("users.db")
+    c = db.cursor()
+
+    c.execute("UPDATE carts SET quantity = ? WHERE username = ? AND isbn = ?", (quantity, username, isbn))
+    db.commit()
+
+def addToCart(username, isbn, quantity):
+    db = sqlite3.connect("users.db")
+    c = db.cursor()
+
+    # check if the book is already in the cart
+    c.execute("SELECT quantity FROM carts WHERE username = ? AND isbn = ?", (username, isbn))
+    books = c.fetchall()
+    if len(books) > 0:
+        book, = books[0]
+        if book < quantity:
+            c.execute("UPDATE carts SET quantity = ? WHERE username = ? AND isbn = ?", (quantity, username, isbn))
+    else:
+        c.execute("INSERT INTO carts (username, isbn, quantity) VALUES (?, ?, ?)", (username, isbn, quantity))
+    db.commit()
+
+def removeFromCart(username, isbn):
+    db = sqlite3.connect("users.db")
+    c = db.cursor()
+
+    c.execute("DELETE FROM carts WHERE username = ? AND isbn = ?", (username, isbn))
+    db.commit()
+
+def getCart(username):
+    db = sqlite3.connect("users.db")
+    c = db.cursor()
+
+    c.execute("SELECT isbn,quantity FROM carts WHERE username = ?", (username,))
+
+    books = []
+
+    for isbn, quantity in c.fetchall():
+        book = bookhelper.getBook(isbn)
+        book["quantity"] = quantity
+        books.append(book)
+
+    return books
+
+def getCartPrice(username):
+    db = sqlite3.connect("users.db")
+    c = db.cursor()
+
+    c.execute("SELECT isbn,quantity FROM carts WHERE username = ?", (username,))
+
+    price = 0.0
+
+    for isbn, quantity in c.fetchall():
+        book = bookhelper.getBook(isbn)
+        bookPrice = float(book["price"][1:])
+        price += bookPrice*quantity
+
+    if price == 0:
+        return  ""
+
+    return "${0:.2f}".format(round(price,2))

@@ -20,8 +20,10 @@
             <span class="detail-price">%(price)s</span><br >
             Written by <span class="detail-authors">%(authors)s</span><br >
             Published by <span class="detail-publisher">%(publisher)s</span> on <span class="detail-pub-date">%(releasedate)s</span><br >
-            <form method="post" action="?page=cart" enctype="multipart/form-data">
+            <form method="post" action="?page=account-detail&username=%(username)s" enctype="multipart/form-data">
                 <input id="cart-button" type="submit" name="action" value="%(cartmessage)s" %(disabled)s/>
+                <label id="quantity-label" for="quantity">Quantity: </label><input id="quantity" type="number" name="quantity" value="1" min="1" max="99" step="1" />
+                <input type="hidden" name="book" value="%(isbn)s" />
             </form>
             <span class="detail-description">%(productdescription)s</span>
         </div>

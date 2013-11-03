@@ -38,9 +38,10 @@ def getHeader(query="", category="all"):
     user = ""
 
     if username != None:
+        realname = userhelper.getRealName(username)
         userFile = open("userLoggedIn.html", "r")
         user = userFile.read()
-        user = user % { "username": username }
+        user = user % { "username": username, "realname": realname }
         userFile.close()
     else:
         userFile = open("userLoggedOut.html", "r")
@@ -138,6 +139,8 @@ def bookDetail(isbn):
         book["disabled"] = "disabled"
         book["cartmessage"] = "Login to purchase"
 
+    book["username"] = userhelper.getCurrentUser()
+
     return bookDetail % book
 
 def accountDetail(username):
@@ -145,4 +148,18 @@ def accountDetail(username):
     accountDetail = accountDetailFile.read()
     accountDetailFile.close()
 
-    return accountDetail
+    realname = userhelper.getRealName(username)
+
+    cartResultFile = open("cartResult.html", "r")
+    cartResult = cartResultFile.read()
+    cartResultFile.close()
+
+    cart = ""
+    for book in userhelper.getCart(username):
+        book["username"] = username
+        cart += cartResult % book
+
+    if cart == "":
+        return accountDetail % { "header": getHeader(), "username": username, "realname": realname, "cart": cart, "cartsuffix": " is empty" }
+
+    return accountDetail % { "header": getHeader(), "username": username, "realname": realname, "cart": cart, "cartsuffix": "'s price: "+userhelper.getCartPrice(username) }

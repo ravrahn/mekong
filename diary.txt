@@ -15,4 +15,5 @@ Date	Start	Stop	Activity
 01/11	12:00	13:00	Registering now adds user to the database.
 01/11	20:30	22:30	Email validation is now functional.
 03/11	14:30	16:00	Sessions are now functional.
-03/11	16:00	18:00	Account detail is not functional.
+03/11	16:00	18:00	Account detail is now functional.
+03/11	20:00	21:00	Cart is now functional.

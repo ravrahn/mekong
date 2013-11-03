@@ -1,0 +1,20 @@
+            <div class="book">
+                <a class="book-link-cart" href="?page=book-detail&book=%(isbn)s" ></a>
+                <div class="book-img-container" ><img class="book-img" src="%(largeimageurl)s" /></div>
+                <div class="book-title" >%(title)s</div>
+                <div class="book-author" >%(authors)s</div>
+                <div class="book-price-cart" >%(price)s</div>
+                <div class="book-form" >
+	                <form method="post" action="mekong.cgi?page=account-detail&username=%(username)s" enctype="multipart/form-data">
+	                	<label id="quantity-label" for="quantity">Quantity: </label><input id="quantity" type="number" name="quantity" value="%(quantity)s" min="1" max="99" step="1" />
+	                	<div>
+	                		<input class="cart-button" style="float: left;" type="submit" name="action" value="Update" />
+	                		<input class="cart-button" style="float: right;" type="submit" name="action" value="Remove" />
+	                		<div style="clear: both;"></div>
+                		</div>
+                		<input type="hidden" name="book" value="%(isbn)s" />
+                		<input type="hidden" name="username" value="%(username)s" />
+	                </form>
+	            </div>
+                <!-- rank: %(salesrank)s -->
+            </div>
