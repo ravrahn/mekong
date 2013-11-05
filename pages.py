@@ -91,6 +91,11 @@ def login():
 
 def forgotPassword(userHash):
     # reset the password
+    forgotPasswordFile = open("forgotPassword.html", "r")
+    forgotPassword = forgotPasswordFile.read()
+    forgotPasswordFile.close()
+
+    return forgotPassword % { "header":getHeader(), "userHash": userHash }
 
 def validate(validated):
 

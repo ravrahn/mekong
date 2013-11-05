@@ -1,10 +1,13 @@
 #!/usr/bin/python2.7
 import os,sys,re,cgi,cgitb
 import userhelper
+import databasehelper
 import pages
 import Cookie
 
 cgitb.enable()
+
+databasehelper.createDatabases()
 
 form = cgi.FieldStorage()
 
@@ -113,7 +116,7 @@ elif "login" in form.getlist("page"):
         string = pages.login()
 elif "forgot-password" in form.getlist("page"):
     # password reset
-    userHash = form.getlist("user")
+    userHash = form.getfirst("user")
     string = pages.forgotPassword(userHash)
 elif "validate" in form.getlist("page"):
     # if we need to validate a user's account
