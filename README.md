@@ -1,5 +1,5 @@
 # COMP2041 13s2 Assignment 2 - Mekong
-The code in this repo is live [here](http://cgi.cse.unsw.edu.au/~obca109/mekong/mekong.cgi)
+The code in this repo is live [here](http://owencassidy.me/apps/mekong/)
 
 ## My Solution
 
